@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>For Kaior</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="description" content="A little surprise, made with love.">
+  <meta name="theme-color" content="#0b0a0c">
+  <meta property="og:title" content="For Kaior">
+  <meta property="og:description" content="A little surprise, made with love.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%95%8A%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Floating hearts, sparkles and flying doves (filled in by main.js) -->
+  <div id="sky" aria-hidden="true"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- 1. Date gate -->
+  <section id="gate" class="screen" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div class="dove gate-dove" data-dove></div>
+      <p class="script gate-greeting" id="gate-greeting"></p>
+      <h1 id="gate-title" class="gate-title"></h1>
+      <form id="gate-form" class="gate-form" novalidate>
+        <label class="sr-only" for="gate-input">Our special date</label>
+        <input id="gate-input" class="gate-input" type="text" inputmode="numeric" autocomplete="off" maxlength="20">
+        <button type="submit" class="btn btn-gold" id="gate-btn"></button>
+      </form>
+      <p id="gate-msg" class="gate-msg" role="status" aria-live="polite"></p>
+      <p class="gate-note" id="gate-note"></p>
+      <button type="button" id="hint-btn" class="link-btn" aria-expanded="false" aria-controls="hint-text"></button>
+      <p id="hint-text" class="hint" hidden></p>
+    </div>
+  </section>
+
+  <!-- 2. Days together loading screen -->
+  <section id="loader" class="screen" hidden>
+    <div class="loader-inner">
+      <div class="dove loader-dove" data-dove></div>
+      <p class="script loader-top" id="loader-top"></p>
+      <div class="loader-num" id="loader-num">0</div>
+      <p class="loader-text" id="loader-text"></p>
+      <div class="progress" aria-hidden="true"><div class="progress-bar" id="loader-bar"></div></div>
+      <p class="loader-sub" id="loader-sub"></p>
+    </div>
+  </section>
+
+  <main id="site" hidden>
+
+    <!-- 3. Hero -->
+    <header class="hero" id="hero">
+      <div class="dove hero-dove reveal" data-dove></div>
+      <p class="script hero-kicker reveal" id="hero-kicker"></p>
+      <h1 class="hero-name reveal" id="hero-name"></h1>
+      <p class="hero-sub reveal" id="hero-sub"></p>
+      <p class="counter-label reveal" id="counter-label"></p>
+      <div class="counter reveal" role="timer" aria-label="Time together">
+        <div class="count-box"><span class="count-num" id="c-days">0</span><span class="count-unit">days</span></div>
+        <div class="count-box"><span class="count-num" id="c-hours">0</span><span class="count-unit">hours</span></div>
+        <div class="count-box"><span class="count-num" id="c-mins">0</span><span class="count-unit">minutes</span></div>
+        <div class="count-box"><span class="count-num" id="c-secs">0</span><span class="count-unit">seconds</span></div>
+      </div>
+      <a class="scroll-prompt reveal" href="#story">
+        <span id="scroll-text"></span>
+        <span class="scroll-arrow" aria-hidden="true"></span>
+      </a>
+    </header>
+
+    <!-- 4. Our story -->
+    <section class="section" id="story">
+      <div class="section-head reveal" data-heading="storyHeading"></div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span class="dove" data-dove></span></div>
+
+    <!-- 5. Memories -->
+    <section class="section" id="memories">
+      <div class="section-head reveal" data-heading="galleryHeading"></div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span class="dove" data-dove></span></div>
+
+    <!-- 6. Reasons -->
+    <section class="section" id="reasons">
+      <div class="section-head reveal" data-heading="reasonsHeading"></div>
+      <div class="reasons reveal">
+        <button type="button" class="reason-card" id="reason-card" aria-describedby="reason-count">
+          <span class="reason-inner" id="reason-inner">
+            <span class="reason-face reason-front"><span class="reason-no"></span><span class="reason-text"></span></span>
+            <span class="reason-face reason-back"><span class="reason-no"></span><span class="reason-text"></span></span>
+          </span>
+        </button>
+        <p class="reason-count" id="reason-count" aria-live="polite"></p>
+        <button type="button" class="btn btn-gold" id="reason-btn"></button>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span class="dove" data-dove></span></div>
+
+    <!-- 7. Songs -->
+    <section class="section" id="songs">
+      <div class="section-head reveal" data-heading="songsHeading"></div>
+      <div class="songs" id="song-list"></div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span class="dove" data-dove></span></div>
+
+    <!-- 8. Love letter -->
+    <section class="section" id="letter">
+      <div class="section-head reveal" data-heading="letterHeading"></div>
+      <div class="letter-wrap reveal">
+        <button type="button" class="envelope" id="envelope">
+          <span class="env-body" aria-hidden="true">
+            <span class="env-flap"></span>
+            <span class="env-seal">♥</span>
+          </span>
+          <span class="env-label" id="env-label"></span>
+        </button>
+        <article class="paper" id="paper" hidden>
+          <p class="letter-greet" id="letter-greet"></p>
+          <div class="letter-body" id="letter-body"></div>
+          <p class="letter-sign" id="letter-sign"><span id="letter-signoff"></span><span class="script" id="letter-signature"></span></p>
+          <button type="button" class="link-btn letter-skip" id="letter-skip"></button>
+        </article>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"><span class="dove" data-dove></span></div>
+
+    <!-- 9. Surprise -->
+    <section class="section" id="surprise">
+      <div class="section-head reveal" data-heading="surpriseHeading"></div>
+      <div class="surprise reveal">
+        <p class="surprise-tease" id="surprise-tease"></p>
+        <button type="button" class="btn btn-gold btn-big" id="surprise-btn"></button>
+        <div class="coupon" id="coupon" hidden aria-live="polite">
+          <span class="coupon-label" id="coupon-label"></span>
+          <p class="coupon-text" id="coupon-text"></p>
+          <p class="coupon-fine" id="coupon-fine"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Footer -->
+    <footer class="footer">
+      <div class="dove footer-dove" data-dove></div>
+      <p class="script footer-line" id="footer-line"></p>
+      <p class="footer-date" id="footer-date"></p>
+      <p class="footer-days"><span id="footer-days">0</span> <span id="footer-suffix"></span></p>
+    </footer>
+  </main>
+
+  <!-- Background music player -->
+  <div id="player" class="player" hidden role="region" aria-label="Music player">
+    <button type="button" id="pl-play" class="pl-btn pl-play" aria-label="Play"></button>
+    <div class="pl-mid">
+      <div class="pl-title" id="pl-title"></div>
+      <div class="pl-bar" id="pl-bar" role="progressbar" aria-label="Song progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="pl-fill" id="pl-fill"></div>
+      </div>
+    </div>
+    <button type="button" id="pl-mute" class="pl-btn" aria-label="Mute"></button>
+  </div>
+
+  <!-- Gallery lightbox -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Memory">
+    <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
+    <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous memory">&#8249;</button>
+    <figure class="lb-fig">
+      <div class="lb-media" id="lb-media"></div>
+      <figcaption class="lb-cap">
+        <span class="lb-title" id="lb-title"></span>
+        <span class="lb-date" id="lb-date"></span>
+        <span class="lb-text" id="lb-text"></span>
+      </figcaption>
+    </figure>
+    <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next memory">&#8250;</button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
